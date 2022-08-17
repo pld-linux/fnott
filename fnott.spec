@@ -1,7 +1,7 @@
 Summary:	Keyboard driven and lightweight Wayland notification daemon
 Name:		fnott
 Version:	1.3.0
-Release:	1
+Release:	2
 License:	MIT and Zlib
 Group:		Applications
 Source0:	https://codeberg.org/dnkl/fnott/archive/%{version}.tar.gz
