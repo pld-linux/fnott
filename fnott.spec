@@ -1,18 +1,18 @@
 Summary:	Keyboard driven and lightweight Wayland notification daemon
 Name:		fnott
-Version:	1.4.1
+Version:	1.5.0
 Release:	1
 License:	MIT and Zlib
 Group:		Applications
 Source0:	https://codeberg.org/dnkl/fnott/archive/%{version}.tar.gz
-# Source0-md5:	c5f884031e6f1d47438b3349062b0d4c
+# Source0-md5:	b7ac0044b89bc6fb0961c20831f16147
 URL:		https://codeberg.org/dnkl/fnott/
 BuildRequires:	dbus-devel
 BuildRequires:	fcft-devel < 4.0.0
 BuildRequires:	fcft-devel >= 3.0.0
 BuildRequires:	fontconfig-devel
 BuildRequires:	libpng-devel
-BuildRequires:	meson >= 0.58.0
+BuildRequires:	meson >= 0.59.0
 BuildRequires:	ninja
 BuildRequires:	pixman-devel
 BuildRequires:	pkgconfig
@@ -21,7 +21,7 @@ BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	scdoc
 BuildRequires:	tllist-devel >= 1.0.1
 BuildRequires:	wayland-devel
-BuildRequires:	wayland-protocols >= 1.27
+BuildRequires:	wayland-protocols >= 1.32
 Requires(post,postun):	desktop-file-utils
 Requires:	fcft < 4.0.0
 Requires:	fcft >= 3.0.0
@@ -66,11 +66,11 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc CHANGELOG.md README.md
+%dir %{_sysconfdir}/xdg/fnott
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/xdg/fnott/fnott.ini
 %attr(755,root,root) %{_bindir}/fnott
 %attr(755,root,root) %{_bindir}/fnottctl
 %{_desktopdir}/fnott.desktop
-%dir %{_datadir}/fnott
-%{_datadir}/fnott/fnott.ini
 %{_mandir}/man1/fnott.1*
 %{_mandir}/man1/fnottctl.1*
 %{_mandir}/man5/fnott.ini.5*
