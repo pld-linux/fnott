@@ -1,11 +1,11 @@
 Summary:	Keyboard driven and lightweight Wayland notification daemon
 Name:		fnott
-Version:	1.5.0
+Version:	1.6.0
 Release:	1
 License:	MIT and Zlib
 Group:		Applications
 Source0:	https://codeberg.org/dnkl/fnott/archive/%{version}.tar.gz
-# Source0-md5:	b7ac0044b89bc6fb0961c20831f16147
+# Source0-md5:	9ab429945639948c143ade33c3ca8764
 URL:		https://codeberg.org/dnkl/fnott/
 BuildRequires:	dbus-devel
 BuildRequires:	fcft-devel < 4.0.0
@@ -17,7 +17,7 @@ BuildRequires:	ninja
 BuildRequires:	pixman-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 2.011
 BuildRequires:	scdoc
 BuildRequires:	tllist-devel >= 1.0.1
 BuildRequires:	wayland-devel
@@ -45,7 +45,8 @@ ZSH completion for fnott command line.
 %setup -q -n %{name}
 
 %build
-%meson build
+%meson build \
+	-Dsystemd-units-dir="%{systemduserunitdir}"
 
 %ninja_build -C build
 
@@ -59,9 +60,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 %update_desktop_database_post
+%systemd_user_post fnott.service
+
+%preun
+%systemd_user_preun fnott.service
 
 %postun
 %update_desktop_database_postun
+%systemd_user_postun fnott.service
 
 %files
 %defattr(644,root,root,755)
@@ -70,6 +76,8 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/xdg/fnott/fnott.ini
 %attr(755,root,root) %{_bindir}/fnott
 %attr(755,root,root) %{_bindir}/fnottctl
+%{systemduserunitdir}/fnott.service
+%{_datadir}/dbus-1/services/fnott.service
 %{_desktopdir}/fnott.desktop
 %{_mandir}/man1/fnott.1*
 %{_mandir}/man1/fnottctl.1*
