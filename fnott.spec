@@ -1,7 +1,7 @@
 Summary:	Keyboard driven and lightweight Wayland notification daemon
 Name:		fnott
 Version:	1.7.1
-Release:	1
+Release:	2
 License:	MIT and Zlib
 Group:		Applications
 Source0:	https://codeberg.org/dnkl/fnott/releases/download/%{version}/%{name}-%{version}.tar.gz
@@ -17,7 +17,7 @@ BuildRequires:	ninja
 BuildRequires:	pixman-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 2.011
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	scdoc
 BuildRequires:	tllist-devel >= 1.0.1
 BuildRequires:	wayland-devel
@@ -45,15 +45,15 @@ ZSH completion for fnott command line.
 %setup -q
 
 %build
-%meson build \
+%meson \
 	-Dsystemd-units-dir="%{systemduserunitdir}"
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
