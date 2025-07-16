@@ -1,11 +1,11 @@
 Summary:	Keyboard driven and lightweight Wayland notification daemon
 Name:		fnott
-Version:	1.7.1
-Release:	2
+Version:	1.8.0
+Release:	1
 License:	MIT and Zlib
 Group:		Applications
 Source0:	https://codeberg.org/dnkl/fnott/releases/download/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	655083997c9f3d8b97d6b63831d43692
+# Source0-md5:	88f14b9b21e93cfb98ec92088fb16817
 URL:		https://codeberg.org/dnkl/fnott/
 BuildRequires:	dbus-devel
 BuildRequires:	fcft-devel < 4.0.0
@@ -25,21 +25,12 @@ BuildRequires:	wayland-protocols >= 1.32
 Requires(post,postun):	desktop-file-utils
 Requires:	fcft < 4.0.0
 Requires:	fcft >= 3.0.0
+Obsoletes:	zsh-completion-fnott < 1.8.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Fnott is a keyboard driven and lightweight notification daemon for
 wlroots-based Wayland compositors.
-
-%package -n zsh-completion-fnott
-Summary:	ZSH completion for fnott command line
-Group:		Applications/Shells
-Requires:	%{name} = %{version}-%{release}
-Requires:	zsh
-BuildArch:	noarch
-
-%description -n zsh-completion-fnott
-ZSH completion for fnott command line.
 
 %prep
 %setup -q
@@ -82,8 +73,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/fnott.1*
 %{_mandir}/man1/fnottctl.1*
 %{_mandir}/man5/fnott.ini.5*
-
-%files -n zsh-completion-fnott
-%defattr(644,root,root,755)
+%{fish_compdir}/fnott.fish
+%{fish_compdir}/fnottctl.fish
 %{zsh_compdir}/_fnott
 %{zsh_compdir}/_fnottctl
